@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import './App.css';
-import Grid from '@material-ui/core/Grid';
 import Appbar from "./components/Appbar"
 import ProductList from "./components/ProductList"
+import SingleProduct from "./components/SingleProduct.js"
+import ProductForm from "./components/ProductForm"
+import { Route, Switch } from 'react-router-dom';
 export default class App extends Component {
-    render() {
-        return (
-            <>
-                <Appbar />
-                <Grid container>
-                    <Grid item xs={false} md={2} />
-                    <ProductList/>
-                    <Grid item xs={false} md={2} />
-                </Grid>
-            </>
-        );
-    }
+  render() {
+    return (
+      <>
+        <Appbar />
+        <Switch>
+          <Route exact path="/" component={ProductList} />
+          <Route exact path="/products/add" component={ProductForm} />
+          <Route exact path="/products/:id" component={SingleProduct} />
+        </Switch>
+      </>
+    );
+  }
 }
