@@ -13,6 +13,17 @@ const useStyles = makeStyles({
   metaDetails: {
     fontWeight: "bold"
   },
+  card: {
+    background: "linear-gradient(45deg, #fffdf7 30%, #ccc7b8 90%)"
+  },
+  image: {
+    maxHeigth: "150px",
+    maxWidth: "90%",
+    padding: "5%"
+  },
+  link: {
+    textDecoration: "none"
+  }
 });
 
 export default function ProductCard(props) {
@@ -27,9 +38,9 @@ export default function ProductCard(props) {
 
   const classes = useStyles();
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia style={{ heigth: "150px" }}
+        <CardMedia className={classes.image}
           component="img"
           src={imagePath}
           title={name}
@@ -49,14 +60,16 @@ export default function ProductCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Link to={`/products/${id}`}>
-          <Button size="small" color="primary">
+        <Link to={`/products/${id}`} className={classes.link}>
+          <Button variant="outlined" color="primary">
             Szczegóły
         </Button>
         </Link>
-        <Button size="small" color="primary">
-          Lokalizacja
+        <Link to={`/products/${id}/locations`} className={classes.link}>
+          <Button variant="outlined" color="primary">
+            Lokalizacja
         </Button>
+        </Link>
       </CardActions>
     </Card>
   );

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { fetchCategories } from "../api"
+import { fetchCategories, addProduct } from "../api"
 
 export default function ProductForm() {
   const [categoriesOption, setCategoriesOption] = useState([])
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
+    async function asyncFetchCategories() {
       const categories = await fetchCategories();
       const options = categories.map((c) =>
         <option key={c.id} value={c.id}>{c.name}</option>
@@ -15,11 +15,11 @@ export default function ProductForm() {
       setCategoriesOption(options);
       setLoading(false);
     }
-    fetchData();
+    asyncFetchCategories();
   },[]);
 
   const { register, handleSubmit} = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = product => {addProduct(product)};
 
   if (isLoading) {
     return "loading";

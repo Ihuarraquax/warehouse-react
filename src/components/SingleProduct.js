@@ -29,7 +29,6 @@ export default class SingleProduct extends Component {
       return (
         <Grid container>
           <Grid item xs={false} md={2} />
-
           <Grid item container spacing={2} xs={12} md={8}>
             <Grid item xs={12}>
               <Typography variant="h2" color="textPrimary" align="center">
@@ -61,7 +60,6 @@ export default class SingleProduct extends Component {
 
             </Grid>
           </Grid>
-
           <Grid item xs={false} md={2} />
         </Grid>
       )

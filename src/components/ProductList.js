@@ -6,19 +6,27 @@ import { fetchProducts } from '../api'
 export default class ProductList extends Component {
 
   state = {
-    data: {}
+    data: {},
+    loading: true
   }
 
   async componentDidMount() {
     const data = await fetchProducts();
     this.setState({ data: data })
+    this.setState({loading: false});
   }
 
   render() {
-    const products = this.state.data.products;
-    if (!products) {
+    
+    if (this.state.loading) {
       return 'Pobieranie produktów';
     } else {
+      if(!this.state.data.products){
+        return "brak produktów"
+      }
+      const products = this.state.data.products;
+      console.log(products);
+      
       return (
         <Grid container>
           <Grid item xs={false} md={1} />
