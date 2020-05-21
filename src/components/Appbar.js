@@ -40,6 +40,11 @@ export default function Appbar() {
             Dodaj produkt
           </Typography>
           </Link>
+          <Link to={"/locations/add"}>
+          <Typography variant="h6" >
+            Dodaj lokacje
+          </Typography>
+          </Link>
 
           <Button color="inherit">Login</Button>
         </Toolbar>

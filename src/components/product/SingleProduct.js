@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { fetchProduct } from '../api'
+import { fetchProduct } from '../../api'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Typography } from '@material-ui/core';
+
+import LocationCard from "../locations/LocationCard"
 
 export default class SingleProduct extends Component {
 
@@ -52,11 +54,11 @@ export default class SingleProduct extends Component {
               <Typography variant="h6" gutterBottom>
                 {p.price} zł
               </Typography>
-              <Typography variant="overline" display="block">
-                {p.locations.map((l) => {
-                  return (<p>{l.name}</p>)
-                })}
-              </Typography>
+
+              {p.locations.map((l) => {
+                return (<LocationCard data={l}></LocationCard>)
+              })}
+
 
             </Grid>
           </Grid>

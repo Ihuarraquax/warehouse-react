@@ -15,9 +15,8 @@ export const fetchProducts = async () => {
 export const fetchProduct = async (id) => {
   try {
     const { data: product } = await axios.get(url + "products/" + id);
-
     const { data: category } = await axios.get(product._links.category.href.slice(0, product._links.category.href.indexOf("{")));
-    const { data: { _embedded } } = await axios.get(product._links.locations.href);
+    const { data: { _embedded } } = await axios.get(product._links.locations.href.slice(0, product._links.locations.href.indexOf("{")));
     const { locations } = _embedded;
 
     return { ...product, category, locations };
@@ -33,18 +32,33 @@ export const fetchCategories = async () => {
 }
 
 export const fetchLocation = async (name) => {
-  const {data} = await axios.get(url + "locations/"+name);
-  console.log(data);
+  const {data} = await axios.get(url + "api/locations/"+name);
   return data;
 }
 
 export const addProduct = async (product) => {
-  console.log(product);
-  axios.post(url + 'products/add',
+  await axios.post(
+    url + 'api/products/add',
     product
   ).then(res => {
     return res.data;
   }).catch(error => {
     return error.error
   });
+}
+
+export const addLocation = async (location) => {
+
+  return await axios.post(url + 'api/locations',
+    location
+  ).then(res => {
+    return res;
+  }).catch(error => {
+    return error.response
+  });
+}
+
+export const updateLocation = async (location) => {
+  axios.patch(url +"locations/"+location.id,
+  {count: location.count})
 }

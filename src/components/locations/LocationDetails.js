@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { fetchLocation } from "../../api"
+import { fetchLocation, updateLocation } from "../../api"
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
   link: {
@@ -9,28 +10,46 @@ const useStyles = makeStyles({
 });
 
 export default function LocationDetails(props) {
-  const [name, setName] = useState("");
+  const [location, setLocation] = useState({});
   const [count, setCount] = useState(-1);
-
-  useEffect(() => {
-    const asyncFetchLocation = async (name) => {
-      const location = await fetchLocation(name);
-      setName(location.name);
-      setCount(location.count);
-    }
-    console.log(props.match.params.name)
-    asyncFetchLocation(props.match.params.name);
-  },[])
-
-  const increaseCount = () =>{
-    setCount(count+1)
+  const [newCount, setNewCount] = useState(-1);
+  const [loading, setLoading] = useState(true);
+  
+  const asyncFetchLocation = async (name) => {
+    const location = await fetchLocation(name);
+    console.log(location);
+    
+    setLocation(location);
+    setCount(location.count);
+    setNewCount(location.count);
+    setLoading(false);
   }
 
+  useEffect(() => {
+    asyncFetchLocation(props.match.params.name);
+  }, [])
+
+  const handleChange = (e) => {
+    setNewCount(e.target.value)
+  }
+  const handleButtonClick = () => {
+    
+    const updatedLocation = location;
+    updatedLocation.count = newCount;
+    updateLocation(updatedLocation);
+    setCount(updatedLocation.count)
+  }
+  if(!loading){
   return (
     <div>
-        {name} : {count}
-        <button onClick={increaseCount}>zwieksz</button>
+      {location.name}(aktualny stan: {count}) : <input type="number" value={newCount} onChange={handleChange}></input>
+      <Button variant="contained" disabled={count == newCount} onClick={handleButtonClick}>
+        Zapisz zmiany
+      </Button>
     </div>
-    
-  )
+
+  )}
+  else {
+    return "loading"
+  }
 }

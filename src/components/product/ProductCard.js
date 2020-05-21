@@ -67,7 +67,7 @@ export default function ProductCard(props) {
         </Link>
         <Link to={`/products/${id}/locations`} className={classes.link}>
           <Button variant="outlined" color="primary">
-            Lokalizacja
+            Lokacja
         </Button>
         </Link>
       </CardActions>

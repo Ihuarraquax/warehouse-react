@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { fetchCategories, addProduct } from "../api"
+import { fetchCategories, addProduct } from "../../api"
 
 export default function ProductForm() {
   const [categoriesOption, setCategoriesOption] = useState([])
@@ -16,10 +16,10 @@ export default function ProductForm() {
       setLoading(false);
     }
     asyncFetchCategories();
-  },[]);
+  }, []);
 
-  const { register, handleSubmit} = useForm();
-  const onSubmit = product => {addProduct(product)};
+  const { register, handleSubmit } = useForm();
+  const onSubmit = product => { addProduct(product) };
 
   if (isLoading) {
     return "loading";

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
 import ProductCard from './ProductCard';
-import { fetchProducts } from '../api'
+import { fetchProducts } from '../../api'
 
 export default class ProductList extends Component {
 
