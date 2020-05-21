@@ -39,7 +39,7 @@ export default function ProductCard(props) {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/products/${id}`} >
         <CardMedia className={classes.image}
           component="img"
           src={imagePath}
@@ -60,11 +60,6 @@ export default function ProductCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Link to={`/products/${id}`} className={classes.link}>
-          <Button variant="outlined" color="primary">
-            Szczegóły
-        </Button>
-        </Link>
         <Link to={`/products/${id}/locations`} className={classes.link}>
           <Button variant="outlined" color="primary">
             Lokacja

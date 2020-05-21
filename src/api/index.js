@@ -35,6 +35,14 @@ export const fetchLocation = async (name) => {
   const {data} = await axios.get(url + "api/locations/"+name);
   return data;
 }
+export const fetchLocations = async () => {
+  const {data} = await axios.get(url + "/locations");
+  
+  const {_embedded} = data;
+  const {locations} = _embedded;
+  console.log(locations)
+  return locations;
+}
 
 export const addProduct = async (product) => {
   await axios.post(

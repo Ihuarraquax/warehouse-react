@@ -15,7 +15,7 @@ export default class App extends Component {
       <>
         <Appbar />
         <Switch>
-          <Route exact path="/" component={ProductList} />
+          <Route exact path="/products" component={ProductList} />
           <Route exact path="/products/add" component={ProductForm} />
           <Route exact path="/products/:id" component={SingleProduct} />
           <Route exact path="/products/:id/locations" component={ProductLocations} />
