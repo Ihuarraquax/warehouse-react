@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Appbar() {
+export default function Appbar(props) {
   const classes = useStyles();
-
+  const { currentUser, showAdminBoard, logOut } = props.data;
+  console.log(props.data)
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -40,13 +41,25 @@ export default function Appbar() {
           <Typography variant="h6" className={classes.title} component={Link} to={"/"}>
             Magazyn App
           </Typography>
+          {showAdminBoard && (
+            <MenuList className={classes.menu}>
+              <MenuItem component={Link} to={"/products"}>Produkty</MenuItem>
+              <MenuItem component={Link} to={"/locations"}>Lokacje</MenuItem>
+              <MenuItem component={Link} to={"/products/add"}>Dodaj produkt</MenuItem>
+              <MenuItem component={Link} to={"/locations/add"}>Dodaj lokacje</MenuItem>
+            </MenuList>)}
 
-          <MenuList className={classes.menu}>
-            <MenuItem component={Link} to={"/products"}>Produkty</MenuItem>
-            <MenuItem component={Link} to={"/locations"}>Lokacje</MenuItem>
-            <MenuItem component={Link} to={"/products/add"}>Dodaj produkt</MenuItem>
-            <MenuItem component={Link} to={"/locations/add"}>Dodaj lokacje</MenuItem>
-          </MenuList>
+          {currentUser ? (
+            <MenuList className={classes.menu}>
+              <MenuItem component={Link} to={"/profile"}>{currentUser.username}</MenuItem>
+              <MenuItem component={Link} to={"/login"} onClick={() => { logOut() }}>Wyloguj</MenuItem>
+            </MenuList>
+          ) : (
+              <MenuList className={classes.menu}>
+                <MenuItem component={Link} to={"/login"}>Zaloguj</MenuItem>
+                <MenuItem component={Link} to={"/register"}>Zarejestruj</MenuItem>
+              </MenuList>
+            )}
         </Toolbar>
       </AppBar>
     </div>
