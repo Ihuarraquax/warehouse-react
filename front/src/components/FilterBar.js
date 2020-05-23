@@ -85,7 +85,9 @@ export default function FilterBar() {
             <Typography variant="h6" id="range-slider" gutterBottom>
               Sortuj według:
              </Typography>
-            <ButtonGroup size="large" aria-label="outlined primary button group" className={classes.sortButtons} fullWidth disableElevation variant="contained" color="primary">
+            <ButtonGroup size="large" aria-label="outlined primary button group" 
+            className={classes.sortButtons} fullWidth disableElevation 
+            variant="contained" color="primary">
               <Button onClick={() => handleChangeSorting('name')} >Nazwy</Button>
               <Button onClick={() => handleChangeSorting('price')} >Ceny</Button>
               <Button onClick={() => handleChangeSorting('category')} >Kategorii</Button>
