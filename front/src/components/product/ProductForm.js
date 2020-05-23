@@ -14,6 +14,7 @@ export default function ProductForm() {
       )
       setCategoriesOption(options);
       setLoading(false);
+      console.log()
     }
     asyncFetchCategories();
   }, []);

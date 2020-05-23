@@ -1,6 +1,5 @@
 package pl.zablocki.warehouse.model;
 
-import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

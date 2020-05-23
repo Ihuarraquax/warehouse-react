@@ -6,7 +6,7 @@ export const fetchProducts = async () => {
   try {
     const { data: { _embedded } } = await axios.get(url + "products");
     return { products: _embedded.products }
-  }
+  }//
   catch (error) {
     return {};
   }
