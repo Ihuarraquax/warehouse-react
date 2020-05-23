@@ -46,7 +46,7 @@ export default function ProductCard(props) {
           title={name}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h4">
             {reduceText(name, 30)}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

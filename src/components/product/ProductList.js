@@ -3,45 +3,74 @@ import Grid from '@material-ui/core/Grid';
 import ProductCard from './ProductCard';
 import FilterBar from '../FilterBar'
 import { fetchProducts, fetchCategories } from '../../api'
-import {FilterContext} from './FilterContext'
+import { FilterContext } from './FilterContext'
 
 export default class ProductList extends Component {
 
 
-constructor(props){
-  super(props);
-  this.updateFilter = this.updateFilter.bind(this)
-  this.state = {
-    data: {},
-    loading: true,
-    categories: [],
-    priceMin: 0,
-    priceMax: 9999999,
-    update: this.updateFilter
-  }
-  
+  constructor(props) {
+    super(props);
+    this.updateCategories = this.updateCategories.bind(this)
+    this.updatePriceRange = this.updatePriceRange.bind(this)
+    this.changeSorting = this.changeSorting.bind(this)
+    this.state = {
+      data: {},
+      loading: true,
+      categories: [],
+      priceRange: [0, 10000],
+      sortField: '',
+      updateCategories: this.updateCategories,
+      updatePriceRange: this.updatePriceRange,
+      changeSorting: this.changeSorting,
+    }
 
-}
+
+  }
   async componentDidMount() {
     const data = await fetchProducts();
     const categoriesData = await fetchCategories();
-    this.setState({categories: categoriesData.map(c => ({id: c.id, name: c.name, show: true }))})
+    this.setState({ categories: categoriesData.map(c => ({ id: c.id, name: c.name, show: true })) })
     this.setState({ data: data });
     this.setState({ loading: false });
   }
 
-  updateFilter(categories, priceMin, priceMax) {
-    this.setState({categories: categories});
-    this.setState({priceMin: priceMin});
-    this.setState({priceMax: priceMax});
+  updateCategories(categories) {
+    this.setState({ categories: categories });
+  }
+  updatePriceRange(priceRange) {
+    this.setState({ priceRange: priceRange });
+  }
+  changeSorting(sortField) {
+    this.setState({ sortField: sortField });
   }
 
   renderProducts = () => {
-
+    console.log(this.state.data.products)
     const filteredProducts = this.state.data.products.filter((p) => {
       return this.state.categories.find(c => c.name === p.category.name).show
+        && p.price > this.state.priceRange[0] && p.price < this.state.priceRange[1]
     })
-    //console.log(this.state.data.products);
+    var sortedProducts;
+    switch (this.state.sortField) {
+      case '':
+        sortedProducts = filteredProducts;
+        break;
+      case 'name':
+        sortedProducts = filteredProducts.sort((p1, p2) => {
+          return p1.name.localeCompare(p2.name)
+        })
+        break;
+      case 'price':
+        sortedProducts = filteredProducts.sort((p1, p2) => {
+          return p1.price - p2.price;
+        })
+        break;
+      case 'category':
+        sortedProducts = filteredProducts.sort((p1, p2) => {
+          return p1.category.name.localeCompare(p2.category.name)
+        })
+        break;
+    }
     return filteredProducts.map((p) => (
       <Grid item xs={6} md={4} lg={3} key={p.id}>
         <ProductCard
