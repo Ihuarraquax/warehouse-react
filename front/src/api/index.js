@@ -40,7 +40,6 @@ export const fetchLocations = async () => {
   
   const {_embedded} = data;
   const {locations} = _embedded;
-  console.log(locations)
   return locations;
 }
 

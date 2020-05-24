@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Appbar(props) {
   const classes = useStyles();
   const { currentUser, showAdminBoard, logOut } = props.data;
-  console.log(props.data)
   return (
     <div className={classes.root}>
       <AppBar position="static">

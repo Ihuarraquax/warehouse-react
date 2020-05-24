@@ -4,19 +4,26 @@ const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {
   login(username, password) {
-    console.log("loguje "+ username+password)
     return axios
       .post(API_URL + "signin", {
         username,
         password
       })
       .then(response => {
-        console.log(response)
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
+        } else {
+          return response.data
         }
-        return response.data;
-      }).catch(e => console.log(e));
+      })
+      .catch(e => {
+        if (e.message == "Request failed with status code 401") {
+          throw new Error("Niepoprawny login lub hasło");
+        }
+        else {
+          throw new Error("Błąd logowania, spróbuj później");
+        }
+      })
   }
 
   logout() {

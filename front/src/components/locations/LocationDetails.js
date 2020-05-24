@@ -17,8 +17,6 @@ export default function LocationDetails(props) {
   
   const asyncFetchLocation = async (name) => {
     const location = await fetchLocation(name);
-    console.log(location);
-    
     setLocation(location);
     setCount(location.count);
     setNewCount(location.count);

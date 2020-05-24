@@ -29,7 +29,6 @@ export default function FilterBar() {
       updatePriceRange(sliderValue)
     };
     const handleChangeSorting = (value) => {
-      console.log(value)
       changeSorting(value)
     }
     function valuetext(value) {

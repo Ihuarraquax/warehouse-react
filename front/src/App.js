@@ -13,8 +13,8 @@ import AuthService from "./services/auth.service";
 import Login from "./components/auth/login.component";
 import Profile from "./components/auth/profile.component";
 import Register from "./components/auth/register.component";
-
 import { Route, Switch } from 'react-router-dom';
+
 export default class App extends Component {
 
   constructor(props) {
@@ -47,7 +47,6 @@ export default class App extends Component {
         <Appbar data={this.state} />
         <Switch>
           <Route exact path="/" component={MainPage} />
-          <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/products" component={ProductList} />
@@ -58,6 +57,7 @@ export default class App extends Component {
           <Route exact path="/locations/add" component={LocationForm} />
           <Route exact path="/locations/:name" component={LocationDetails} />
         </Switch>
+
       </>
     );
   }

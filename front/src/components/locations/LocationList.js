@@ -17,7 +17,6 @@ export default function LocationList() {
       setLocations(fetchedLocations);
     } 
     asyncFetchLocations();
-    console.log(locations)
     setLoading(false);
   },[])
   if(loading){

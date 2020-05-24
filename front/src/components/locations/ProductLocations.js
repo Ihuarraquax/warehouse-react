@@ -10,7 +10,6 @@ export default class ProductLocations extends Component {
 
   async componentDidMount() {
     const data = await fetchProduct(this.props.match.params.id);
-    console.log(data);
 
     this.setState({ product: data });
     this.setState({ isLoading: false })

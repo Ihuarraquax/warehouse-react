@@ -12,13 +12,17 @@ export default class SingleProduct extends Component {
   state = {
     isLoading: true,
     product: {},
+    allLocationsCount: 0
   }
 
   async componentDidMount() {
     const data = await fetchProduct(this.props.match.params.id);
     this.setState({ product: data });
     this.setState({ isLoading: false })
-
+    console.log(data.locations)
+    const sum = data.locations.reduce((pv, cv) => pv + cv.count, 0);
+    console.log(sum)
+    this.setState({allLocationsCount: sum});
   }
 
   render() {
@@ -54,11 +58,14 @@ export default class SingleProduct extends Component {
               <Typography variant="h6" gutterBottom>
                 {p.price} zł
               </Typography>
+              <Typography variant="h6" gutterBottom>
+                całkowita ilosc: {this.state.allLocationsCount} 
+              </Typography>
 
               {p.locations.map((l) => {
                 return (<LocationCard data={l}></LocationCard>)
               })}
-
+              {this.state.allLocationsCount}
 
             </Grid>
           </Grid>

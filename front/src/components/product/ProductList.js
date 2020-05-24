@@ -45,7 +45,6 @@ export default class ProductList extends Component {
   }
 
   renderProducts = () => {
-    console.log(this.state.data.products)
     const filteredProducts = this.state.data.products.filter((p) => {
       return this.state.categories.find(c => c.name === p.category.name).show
         && p.price > this.state.priceRange[0] && p.price < this.state.priceRange[1]

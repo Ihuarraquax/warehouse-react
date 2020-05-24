@@ -30,8 +30,6 @@ export default function LocationForm() {
   useEffect(() => {
     async function asyncFetchProducts() {
       const { products } = await fetchProducts();
-      console.log(products);
-
       const options = products.map((p) =>
         <MenuItem value={p.id}>{p.name}</MenuItem>
       )
@@ -54,7 +52,6 @@ export default function LocationForm() {
   const onAdd = async () => {
     const location = { name, count, productId }
     var res = await addLocation(location);
-    console.log(res)
     setResponseMessage(res.data.message)
     setResponseStatus(res.status)
     setTimeout(() => {
