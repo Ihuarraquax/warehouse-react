@@ -15,7 +15,7 @@ public class Location {
     @Column(unique=true)
     private String name;
 
-    @ManyToOne
+    @ManyToOne()
     private Product product;
 
     private int count;

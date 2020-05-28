@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import pl.zablocki.warehouse.model.Product;
 import pl.zablocki.warehouse.model.projections.ProductExtendedProjection;
 
+import java.util.Optional;
+
 @CrossOrigin
 @RepositoryRestResource(excerptProjection = ProductExtendedProjection.class)
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
+    Optional<Product> findByName(String name);
 }

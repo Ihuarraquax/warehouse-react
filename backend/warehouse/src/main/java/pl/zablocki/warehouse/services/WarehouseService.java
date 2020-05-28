@@ -46,4 +46,16 @@ public class WarehouseService {
     public Location addLocation(Location location) {
         return locationRepository.save(location);
     }
+
+    public void saveLocation(Location location) {
+        locationRepository.save(location);
+    }
+
+    public void deleteProduct(Product product1) {
+        productRepository.delete(product1);
+    }
+
+    public Optional<Product> getProduct(String name) {
+        return productRepository.findByName(name);
+    }
 }

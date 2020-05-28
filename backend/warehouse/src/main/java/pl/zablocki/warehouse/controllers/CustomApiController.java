@@ -21,7 +21,7 @@ public class CustomApiController {
     }
 
     @PostMapping(path = "api/products/add")
-    public Product addProduct(@RequestBody ProductDto product){
+    public Product addProduct(@RequestBody ProductDto product) {
         Product newProduct = new Product();
         newProduct.setCategory(warehouseService.getCategory(Long.parseLong(product.getCategory())).get());
         newProduct.setDetails(product.getDetails());
@@ -33,9 +33,9 @@ public class CustomApiController {
     }
 
     @GetMapping(path = "/api/locations/{name}")
-    public Optional<Location> getLocationByName(@PathVariable String name){
+    public Optional<Location> getLocationByName(@PathVariable String name) {
         Optional<Location> locationByName = warehouseService.getLocationByName(name);
-        if(!locationByName.isPresent()){
+        if (!locationByName.isPresent()) {
             return locationByName; //hack todo
         }
         locationByName.get().getProduct().setLocations(null);
@@ -43,19 +43,38 @@ public class CustomApiController {
     }
 
     @PostMapping(path = "/api/locations")
-    public Location addLocation(@RequestBody LocationDto locationDto){
-        Location location = new Location();
-        location.setName(locationDto.getName());
-        location.setCount(locationDto.getCount());
-        location.setProduct(warehouseService.getProduct(locationDto.getProductId()).get());
-        Location newLocation = warehouseService.addLocation(location);
-        newLocation.setProduct(null);
-        return newLocation;
+    public Location addLocation(@RequestBody LocationDto locationDto) {
+        Optional<Location> locationByName = warehouseService.getLocationByName(locationDto.getName());
+        if (locationByName.isPresent()) {
+            Location location = locationByName.get();
+            location.setName(locationDto.getName());
+            location.setCount(locationDto.getCount());
+            location.setProduct(warehouseService.getProduct(locationDto.getProductId()).get());
+            Location newLocation = warehouseService.addLocation(location);
+            newLocation.setProduct(null);
+            return newLocation;
+        } else {
+            Location location = new Location();
+            location.setName(locationDto.getName());
+            location.setCount(locationDto.getCount());
+            location.setProduct(warehouseService.getProduct(locationDto.getProductId()).get());
+            Location newLocation = warehouseService.addLocation(location);
+            newLocation.setProduct(null);
+            return newLocation;
+        }
     }
 
-//    @GetMapping(path = "/api/locations")
-//    public List<Location> getAllLocations(){
-//
-//        list
-//    }
+
+    @DeleteMapping(path = "/api/products/{name}")
+    public void deleteProduct(@PathVariable String name) {
+        Optional<Product> product = warehouseService.getProduct(name);
+        if (product.isPresent()) {
+            Product product1 = product.get();
+            for (Location location : product1.getLocations()) {
+                location.setProduct(null);
+                warehouseService.saveLocation(location);
+            }
+            warehouseService.deleteProduct(product1);
+        }
+    }
 }
