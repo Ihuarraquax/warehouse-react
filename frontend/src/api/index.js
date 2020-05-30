@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authHeader from '../services/auth-header'
-const url = window.location.host+"/";
+const url = window.location.origin+"/";
 
 export const fetchProducts = async () => {
   try {
