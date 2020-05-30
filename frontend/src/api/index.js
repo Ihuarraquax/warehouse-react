@@ -4,7 +4,7 @@ const url = "http://localhost:8080/";
 
 export const fetchProducts = async () => {
   try {
-    const { data: { _embedded } } = await axios.get(url + "products", { headers: authHeader() });
+    const { data: { _embedded } } = await axios.get(url + "generated/products", { headers: authHeader() });
     return { products: _embedded.products }
   }//
   catch (error) {
@@ -14,7 +14,7 @@ export const fetchProducts = async () => {
 
 export const fetchProduct = async (id) => {
   try {
-    const { data: product } = await axios.get(url + "products/" + id, { headers: authHeader() });
+    const { data: product } = await axios.get(url + "generated/products/" + id, { headers: authHeader() });
     const { data: category } = await axios.get(product._links.category.href.slice(0, product._links.category.href.indexOf("{")), { headers: authHeader() });
     const { data: { _embedded } } = await axios.get(product._links.locations.href.slice(0, product._links.locations.href.indexOf("{")), { headers: authHeader() });
     const { locations } = _embedded;
@@ -31,7 +31,7 @@ export const deleteProduct = async (product) => {
 }
 
 export const fetchCategories = async () => {
-  const { data: { _embedded } } = await axios.get(url + "categories?projection=categoryForm", { headers: authHeader() });
+  const { data: { _embedded } } = await axios.get(url + "generated/categories?projection=categoryForm", { headers: authHeader() });
   const { categories } = _embedded;
   return categories;
 }
@@ -41,7 +41,7 @@ export const fetchLocation = async (name) => {
   return data;
 }
 export const fetchLocations = async () => {
-  const { data } = await axios.get(url + "locations", { headers: authHeader() });
+  const { data } = await axios.get(url + "generated/locations", { headers: authHeader() });
 
   const { _embedded } = data;
   const { locations } = _embedded;
