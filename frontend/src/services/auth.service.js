@@ -21,7 +21,7 @@ class AuthService {
           throw new Error("Niepoprawny login lub hasło");
         }
         else {
-          throw new Error(e.message);
+          throw new Error(e.response);
         }
       })
   }
