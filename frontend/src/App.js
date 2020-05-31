@@ -23,6 +23,7 @@ export default class App extends Component {
 
     this.state = {
       showAdminBoard: false,
+      showUserBoard: false,
       currentUser: undefined,
       logOut: this.logOut
     };
@@ -33,7 +34,8 @@ export default class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showAdminBoard: user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_MODERATOR")
+        showAdminBoard: user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_MODERATOR"),
+        showUserBoard: user.roles.includes("ROLE_USER")
       });
     }
   }

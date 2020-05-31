@@ -2,12 +2,16 @@ package pl.zablocki.warehouse.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import pl.zablocki.warehouse.controllers.dto.LocationDto;
+import pl.zablocki.warehouse.controllers.dto.OrderDto;
 import pl.zablocki.warehouse.controllers.dto.ProductDto;
 import pl.zablocki.warehouse.model.Location;
+import pl.zablocki.warehouse.model.Order;
 import pl.zablocki.warehouse.model.Product;
+import pl.zablocki.warehouse.model.User;
 import pl.zablocki.warehouse.services.WarehouseService;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -76,5 +80,26 @@ public class CustomApiController {
             }
             warehouseService.deleteProduct(product1);
         }
+    }
+
+    @PostMapping(path = "/api/user/{username}/orders")
+    public void createOrder(@PathVariable String username, @RequestBody OrderDto orderDto) {
+
+        User user = warehouseService.getUserBy(username);
+        Order order = new Order();
+        order.setCount(orderDto.getCount());
+        order.setUser(user);
+        order.setProduct(warehouseService.getProduct(orderDto.getProduct()).get());
+        Order order1 = warehouseService.saveOrder(order);
+        System.out.println(order1);
+    }
+
+    @GetMapping(path = "/api/orders")
+    public List<Order> getUserOrders(@RequestParam("username") String username) {
+        List<Order> ordersBy = warehouseService.getOrdersBy(username);
+        for (Order order : ordersBy) {
+            System.out.println(order);
+        }
+        return ordersBy;
     }
 }

@@ -1,5 +1,6 @@
 package pl.zablocki.warehouse.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Product {
     private String imagePath;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     private List<Location> locations;
 
     private BigDecimal price;
@@ -36,5 +38,18 @@ public class Product {
 
     public Product() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", details='" + details + '\'' +
+                ", category=" + category.getName() +
+                ", imagePath='" + imagePath + '\'' +
+                ", locations=" + locations.size() +
+                ", price=" + price +
+                '}';
     }
 }

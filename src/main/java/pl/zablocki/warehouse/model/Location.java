@@ -1,5 +1,6 @@
 package pl.zablocki.warehouse.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ public class Location {
     @Column(unique=true)
     private String name;
 
-    @ManyToOne()
+    @ManyToOne
+    @JsonBackReference
     private Product product;
 
     private int count;
@@ -29,4 +31,13 @@ public class Location {
     public Location() {
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", product=" + product.getName() +
+                ", count=" + count +
+                '}';
+    }
 }

@@ -1,11 +1,11 @@
 import axios from "axios";
-
-const API_URL = window.location.origin+"/api/auth/";
+import API_URL from "../Config"
+const URL = API_URL+"/api/auth/";
 
 class AuthService {
   login(username, password) {
     return axios
-      .post(API_URL + "signin", {
+      .post(URL + "signin", {
         username,
         password
       })
@@ -34,7 +34,7 @@ class AuthService {
   }
 
   register(username, email, password) {
-    return axios.post(API_URL + "signup", {
+    return axios.post(URL + "signup", {
       username,
       email,
       password

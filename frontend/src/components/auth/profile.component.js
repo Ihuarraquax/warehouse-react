@@ -1,20 +1,32 @@
 import React, { Component } from "react";
 import AuthService from "../../services/auth.service";
+import {getOrders} from "../../api";
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentUser: AuthService.getCurrentUser()
+      currentUser: AuthService.getCurrentUser(),
+      orders: []
     };
+
   }
 
+  async componentDidMount(){
+    const {data} = await getOrders(this.state.currentUser.username);
+    this.setState({
+      orders: data
+    })
+  }
   render() {
+    console.log(this.state.orders)
     const { currentUser } = this.state;
+    const { orders } = this.state;
     if(!currentUser){
       return "logowanie";
     }
+    
     return (
       <div className="container">
         <header className="jumbotron">
@@ -40,6 +52,12 @@ export default class Profile extends Component {
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
         </ul>
+<br></br>
+        <strong>Zamówienia:</strong>
+        <ul>
+          {orders && orders.map(o => <li>{o.product.name} : {o.count}</li>)}
+        </ul>
+        
       </div>
     );
   }

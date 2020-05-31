@@ -50,6 +50,7 @@ export default function Appbar(props) {
 
           {currentUser ? (
             <MenuList className={classes.menu}>
+              <MenuItem component={Link} to={"/products"}>Produkty</MenuItem>
               <MenuItem component={Link} to={"/profile"}>{currentUser.username}</MenuItem>
               <MenuItem component={Link} to={"/login"} onClick={() => { logOut() }}>Wyloguj</MenuItem>
             </MenuList>

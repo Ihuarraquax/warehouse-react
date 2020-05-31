@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProduct, deleteProduct,updateProduct } from '../../api'
+import { fetchProduct, deleteProduct, updateProduct,saveOrder } from '../../api'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,6 +14,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import userService from '../../services/auth.service'
+import Slider from '@material-ui/core/Slider';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 export default function SingleProduct(props) {
 
@@ -23,17 +26,21 @@ export default function SingleProduct(props) {
   const [editProduct, setEditProduct] = useState({});
   const [allLocationsCount, setAllLocationsCount] = useState(0);
   const [editWindow, setEditWindow] = useState(false);
+  const [user, setUser] = useState(userService.getCurrentUser());
+  const [sliderValue, setSliderValue] = useState(0);
 
   const asyncFetchProduct = async () => {
     setIsLoading(true);
     const data = await fetchProduct(props.match.params.id);
     setProduct(data);
     setEditProduct(data);
-    setIsLoading(false)
+
+    console.log(user)
     if (data.locations) {
       const sum = data.locations.reduce((pv, cv) => pv + cv.count, 0);
       setAllLocationsCount(sum);
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -41,6 +48,7 @@ export default function SingleProduct(props) {
       asyncFetchProduct()
     }
   }, [])
+
   const history = useHistory()
   const handleDelete = () => {
     deleteProduct(product).then(res => {
@@ -60,13 +68,19 @@ export default function SingleProduct(props) {
   }
 
   const handleEdited = async () => {
-    await updateProduct(editProduct).then(res =>{
-      if(res.status===200){
+    await updateProduct(editProduct).then(res => {
+      if (res.status === 200) {
         asyncFetchProduct()
       }
     })
 
     handleClose();
+  }
+  const handleSliderChange = (event, newValue) => {
+    setSliderValue(newValue);
+  };
+  const handleOrder = () => {
+    saveOrder({product: product.name, count: sliderValue}, user.username)
   }
 
   const handleNameChange = (e) => {
@@ -114,6 +128,36 @@ export default function SingleProduct(props) {
             {p.locations.map((l) => {
               return (<LocationCard data={l}></LocationCard>)
             })}
+
+            {user.roles.includes("ROLE_USER") ?
+              (<Paper elevation={5}>
+                <Typography id="count-slider" gutterBottom>
+                  Ilość
+                </Typography>
+                <Slider
+                  value={sliderValue}
+                  onChange={handleSliderChange}
+                  aria-labelledby="count-slider"
+                  valueLabelDisplay="auto"
+                  step={1}
+                  marks
+                  min={0}
+                  max={allLocationsCount}
+                />
+                <Button
+                  disabled={sliderValue == 0}
+                  variant="contained"
+                  color={"#152358"}
+                  startIcon={<ShoppingCartIcon />}
+                  onClick={handleOrder}>
+                  Zamów
+              </Button>
+              </Paper>)
+
+
+              : (null)}
+
+
 
             <Button
               disabled={allLocationsCount > 0}

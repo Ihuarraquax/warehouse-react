@@ -49,7 +49,7 @@ public class DbInit implements CommandLineRunner {
                             new HashSet<>(Arrays.asList("mod", "user", "admin"))));
             userRepository.save(
                     authController.createUser("user",
-                            "user@hzablocki.com", "user1",
+                            "user@hzablocki.com", "user",
                             new HashSet<>(Arrays.asList("user"))));
 
 
