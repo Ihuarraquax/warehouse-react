@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProduct, deleteProduct, updateProduct,saveOrder } from '../../api'
+import { fetchProduct, deleteProduct, updateProduct, saveOrder } from '../../api'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -80,7 +80,7 @@ export default function SingleProduct(props) {
     setSliderValue(newValue);
   };
   const handleOrder = () => {
-    saveOrder({product: product.name, count: sliderValue}, user.username)
+    saveOrder({ product: product.name, count: sliderValue }, user.username)
   }
 
   const handleNameChange = (e) => {
@@ -157,25 +157,26 @@ export default function SingleProduct(props) {
 
               : (null)}
 
-
-
-            <Button
-              disabled={allLocationsCount > 0}
-              variant="contained"
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              onClick={handleDelete}>
-              Usuń
+            {user.roles.includes("ROLE_ADMIN") ?
+              (<Paper elevation={5}>
+                <Button
+                  disabled={allLocationsCount > 0}
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleDelete}>
+                  Usuń
               </Button>
 
-            <Button
-              variant="contained"
-              color="warning"
-              startIcon={<EditIcon />}
-              onClick={handleClickOpen}>
-              Edytuj
+                <Button
+                  variant="contained"
+                  color="warning"
+                  startIcon={<EditIcon />}
+                  onClick={handleClickOpen}>
+                  Edytuj
               </Button>
-
+              </Paper>)
+              : (null)}
           </Grid>
         </Grid>
         <Grid item xs={false} md={2} />
