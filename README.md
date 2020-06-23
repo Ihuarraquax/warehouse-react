@@ -9,7 +9,7 @@
 * [Setup](#setup)
 
 ## Demo
-Live version: [Heroku](https://warehouse-front.herokuapp.com/products/2)
+Live version: [Heroku](https://warehouse-front.herokuapp.com)
 for admin functionality login as **admin/admin**
 
 ## General info
