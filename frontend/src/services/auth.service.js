@@ -1,11 +1,9 @@
 import axios from "axios";
-import API_URL from "../Config"
-const URL = API_URL+"/api/auth/";
 
 class AuthService {
   login(username, password) {
     return axios
-      .post(URL + "signin", {
+      .post("/signin", {
         username,
         password
       })
@@ -34,7 +32,7 @@ class AuthService {
   }
 
   register(username, email, password) {
-    return axios.post(URL + "signup", {
+    return axios.post("/signup", {
       username,
       email,
       password
